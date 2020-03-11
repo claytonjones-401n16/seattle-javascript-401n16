@@ -1,10 +1,10 @@
-# Module 3 Final Project: API Server
+# LAB: Event Driven Applications
 
-Implement a fully functional, authenticated and authorized API Server using the latest coding techniques
+Create an event driven application that "distributes" the responsibility for logging to separate modules, using only events to trigger logging based on activity.
 
-Over the course of the previous 2 modules, you have separately created an `auth-server` and an `api-server` ... In this lab, you will be integrating those 2 servers to create a single, authenticated API server.
+We're going to build an application for a company called **CAPS** - The Code Academy Parcel Service
 
-**NOTE** - You will be using this server as a base for all future work in this course. Other servers will be merged with it, and we'll be using it to serve data to our front-end applications later in the course. Completion of this final lab is essential to your future work being integrated.
+**CAPS** will simulate a delivery service where vendors (such a flower shops) will ship products using our delivery service and when delivered, be notified that their customers received what they purchased.
 
 ## Before you begin
 
@@ -12,52 +12,74 @@ Refer to *Getting Started*  in the [lab submission instructions](../../../refere
 
 ## Getting Started
 
-> Create a new GitHub repository for this assignment, called `authenticated-api-server`
-
 ## Requirements
 
-- API Routes must now be protected with the proper permissions based on user capability, using Bearer Authentication and an ACL
-  - `app.get(...)` should require authentication only, no specific roles
-  - `app.post(...)` should require the `create` capability
-  - `app.put(...)` should require the `update` capability
-  - `app.patch(...)` should require the `update` capability
-  - `app.delete(...)` should require the `delete` capability
-- Clean and modularize Auth Middleware
-- Clean/Tighten the Auth Model
-- Stretch Goal
-  - Turn authorization/authentication on or off using a variable in your `.env` file
-  - This can allow us to run an API server that does or does not require authenticated users
+The application must:
 
-> **Implementation Notes/Advice**
+- Simulate the order and delivery of an item from a vendor to a customer
+- The vendor should alert the system of a package to be delivered
+- A driver should alert the system when they've picked up the package
+- A driver should alert the system when they've delivered the package
 
-- Create a new repository for this project, called `authenticated-api-server`
-- Import your previously built API server code and get it working
-- Add the `auth` module/folder from the `auth-server` to this working API server
-- Import and use the auth routes in the API server module
-- Using the auth routes, create some users with appropriate roles to test with.
-- Apply the appropriate auth middleware to each of your API (v1) routes to "protect" them with auth
+### Implementation Details and Requirements
+
+Create the CAPS system as follows:
+
+- `events.js` - Global Event Pool (shared by all modules)
+- `caps.js` - Main Hub Application
+  - Logs every event to the console with a timestamp and the event payload
+- `vendor.js` - Vendor Module
+  - Every 5 seconds, simulate a new customer order
+    - Emit a 'pickup' event
+    - Payload should be an object with your store name, order id, customer name, address
+      - HINT: Have some fun by using the [faker](https://www.npmjs.com/package/faker) library to make up phony information
+  - Whenever the 'delivered' event occurs
+    - Log "thank you" to the console
+- `driver.js` - Drivers Module
+  - On the 'pickup' event ...
+    - Wait 1 second
+      - Log "picked up" to the console.
+      - Emit an 'in-transit' event with the payload
+    - Wait 3 seconds
+      - Log "delivered" to the console
+      - Emit a 'delivered' event with the payload
+
+When running, your console output should look something like this:
+
+```javascript
+EVENT { event: 'pickup',
+  time: 2020-03-06T18:27:17.732Z,
+  payload:
+   { store: '1-206-flowers',
+     orderID: 'e3669048-7313-427b-b6cc-74010ca1f8f0',
+     customer: 'Jamal Braun',
+     address: 'Schmittfort, LA' } }
+DRIVER: picked up e3669048-7313-427b-b6cc-74010ca1f8f0
+EVENT { event: 'in-transit',
+  time: 2020-03-06T18:27:18.738Z,
+  payload:
+   { store: '1-206-flowers',
+     orderID: 'e3669048-7313-427b-b6cc-74010ca1f8f0',
+     customer: 'Jamal Braun',
+     address: 'Schmittfort, LA' } }
+DRIVER: delivered up e3669048-7313-427b-b6cc-74010ca1f8f0
+VENDOR: Thank you for delivering e3669048-7313-427b-b6cc-74010ca1f8f0
+EVENT { event: 'delivered',
+  time: 2020-03-06T18:27:20.736Z,
+  payload:
+   { store: '1-206-flowers',
+     orderID: 'e3669048-7313-427b-b6cc-74010ca1f8f0',
+     customer: 'Jamal Braun',
+     address: 'Schmittfort, LA' } }
+...
+```
 
 ### Testing
 
-- Tests from both previous servers should work in the new merged server...
-- 100% Test Coverage Goal For:
-  - Auth router
-    - Signup
-    - Sign In via username/password or Token
-  - Model Finder Middleware
-  - Auth Middleware
-    - Protected Routes
-  - OAuth Chooser
-  - API Routes
-    - Make assertions on the data shapes returned from the API routes
-
-#### Web Server Visual Tests
-
-- Open this [React Application](https://w638oyk7o8.csb.app/)
-- In the form at the top of the page, enter the URL to your API Server
-- This server is configured to use the routes noted in the first lab requirement
-- If your lab is working, this app will show your API Data!
+- Write tests around all of your units
+- Test event handler function (not event triggers themselves)
+- Use spies to help testing your logger methods (assert that console.log was called right)
 
 ## Assignment Submission Instructions
 
-Refer to the the [Submitting Express Server Lab Submission Instructions](../../../reference/submission-instructions/labs/express-servers.md) for the complete lab submission process and expectations
+Refer to the the [lab submission instructions](../../../reference/submission-instructions/labs/README.md) for the complete lab submission process and expectations

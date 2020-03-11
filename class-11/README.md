@@ -1,8 +1,8 @@
-# Authentication
+# Module 2: DS&A / Recap
 
-Restricting access to information online is one of the foundational paradigms of the internet. Whether it's your online bank account, facebook profile, or a one-time viewing of a document to sign, getting "logged in" to a website is an everday activity for almost every internet user.
+Add the finishing touches to your API Server
 
-Today, we'll be looking at ways to create an account and securely authenticate a user using their chosen username and password
+Implement a new Data Structure
 
 ## Learning Objectives
 
@@ -10,14 +10,15 @@ Today, we'll be looking at ways to create an account and securely authenticate a
 
 #### Describe and Define
 
-- The authentication process
-- cryptographic hash and cypher algorithms
+- Data Structure Implementation -  <!-- To Be Completed By Instructor -->
 
 #### Execute
 
-- Model a User and safely store their sensitive data
-- Implement a Basic Authorization parser
-- Use debugging and troubleshooting skills
+- API Deployed with full features/functionality
+  - Consistent Model Interface
+  - Dynamic Model Routing
+  - Fully Tested
+  - Fully Documented
 
 ## Today's Outline
 

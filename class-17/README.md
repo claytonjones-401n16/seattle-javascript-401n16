@@ -1,8 +1,8 @@
-# TCP Server
+# Module 2: DS&A / Recap
 
-The Transmission Control Protocol (TCP) is widely used by application layer protocols in the Internet Protocol Suite. TCP creates a two way communication between two hosts and provides reliable, ordered, and error checked byte streams between the applications.
+Add the finishing touches to your Auth Server and integrate with your previously completed API Serve
 
-In this class, we will be building a multiple-server event driven system, using TCP as our communication layer.
+Implement a new Data Structure
 
 ## Learning Objectives
 
@@ -10,17 +10,15 @@ In this class, we will be building a multiple-server event driven system, using 
 
 #### Describe and Define
 
-- The OSI Networking Model
-- TCP and UDP Protocol
-- Stateful Networking
-- Packets
-- Buffered Transfer
+- Data Structure Implementation -  <!-- To Be Completed By Instructor -->
 
 #### Execute
 
-- Create a TCP Server
-- Network computers by implementing a TCP server
-- Simulate events through curated messages
+- API Deployed with full features/functionality
+  - Consistent Model Interface
+  - Dynamic Model Routing
+  - Fully Tested
+  - Fully Documented
 
 ## Today's Outline
 

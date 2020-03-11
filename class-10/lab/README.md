@@ -1,42 +1,81 @@
-# Module 2: Final API Server
+# LAB: Authentication
 
-Implement and Deploy a fully functional, tested and documented **Dynamic API Server** using best practices
-
-**NOTE** - You will be using this server as a base for all future work in this course. Other servers will be merged with it, and we'll be using it to serve data to our front-end applications later in the course. Completion of this final lab is essential to your future work being integrated.
+Deploy an Express server that implements Basic Authentication, with signup and signin capabilities, using a Mongo database for storage.
 
 ## Before you begin
 
 Refer to *Getting Started*  in the [lab submission instructions](../../../reference/submission-instructions/labs/README.md) for complete setup, configuration, deployment, and submission instructions.
 
-## Getting Started
+> Create a new repository for this project, called 'auth-server' and work in a branch specific for this day
 
-> Create a new GitHub repository for this assignment, called `api-server`
+### Requirements: Auth Server
 
-## Requirements
+> Create a UML diagram of the authentication system on a whiteboard before you start
 
-- Complete all feature tasks from the previous lab assignments
-- Write API tests for every route, asserting proper response codes and data types
-- Write unit tests for all of your custom middleware
-- Write Model tests for your models, asserting +/- on all CRUD operations
-- Add proper **JSDoc** documentation/comments to all of your modules, functions, middleware
-- Go to Swagger Hub and create Swagger Documentation for your API
-  - Make sure that the model is setup as a parameter, not hard coded as it was for your `json-server`
-- Deploy your server properly to Heroku
+Build an Express Server with the following features
 
-### Peer Review
+- Connect the server to a Mongo database
+- `Users` Mongoose model/schema
+  - Hash the plain text password given before you save a user to the database
+  - Method to authenticate a user using the hashed password
+  - Method to generate a Token following a valid login
+- POST route for `/signup`
+  - Accepts a JSON object with the keys "username" and "password"
+  - Creates a new user record in a Mongo database
+- POST route for `/signin`
+  - Uses middleware to validate the user
+    - If valid, call `next()`
+    - Otherwise, call `next()` with an error as the parameter
+  - If the middleware "works", send the user a token that you've stored on the `request` object
+  - If not, force an express error with `next`
+- GET route for `/users` that returns a JSON object with all users
+  - Stretch Goal: have this route also use the middleware for authentication
+- Basic Authentication Middleware
+  - Reads the encoded username and password from the Authentication header
+  - Checks the `Users` model to see if this is a valid user and the right password
+  - If the user is valid, generate a token and append it to the `request` object
 
-- Before you do your final commit to master, invite a classmate to fork your repo and have them do a full review of your code
-  - Be open to suggestions
-  - Seek more 1:1 information and assistance where you can
-- Do the same for another classmate
-  - Offer helpful, tactical advice for your classmates. Where can their code improve? Do you see opportunities for clarity/readability?
+### Implementation Notes
 
-### Web Server Visual Tests
+- Modularize the system
+- `index.js` should be a standard Express Server entry point
+- `server.js` should be a skinny server application that simply brings in requirements and `use()` the routes
+- Put all of your auth server logic/feature implementations into a folder called `auth/` to keep everything organized
+- At some future point, we will want to be able to re-use the entire `auth/` folder in other servers.
+  - So, keep the `index.js` and `server.js` modules as agnostic and small as possible
 
-- Open this [React Application](https://w638oyk7o8.csb.app/)
-- In the form at the top of the page, enter the URL to your API Server
-- This server is configured to use the routes noted in the first lab requirement
-- If your lab is working, this app will show your API Data!
+### Testing
+
+- POST to /signup to create a new user
+- POST to /signin to login as a user (use basic auth)
+- Need tests for auth middleware and the routes
+  - Does the middleware function (send it a basic header)
+  - Do the routes assert the requirements (signup/signin)
+- Ensure that you use supergoose instead of mongo/express
+
+### Manual Testing Notes
+
+Signup with httpie:
+
+```bash
+echo '{"username":"name","password":"pass"}' | http post :3000/signup
+```
+
+Signin with httpie:
+
+```bash
+http post :3000/signin -a username:password
+```
+
+You may also use Postman or RESTy to test out your routes
+
+#### Web Server Visual Tests
+
+- Open this [React Application](https://w638oyk7o8.csb.app)
+- Choose the `Auth/Auth` menu option
+- In the form at the top of the page, enter the URL to your Auth Server
+- The "Add Account" and "Login" options should be operational with your server
+- If your lab is working, this app will provide a login form and after a login attempt, your token or an error
 
 ## Assignment Submission Instructions
 

@@ -1,4 +1,6 @@
-# Readings: Node Ecosystem, TDD, CI/CD
+# Class 01 Reading 
+
+## _Node Ecosystem, TDD, CI/CD_
 
 Below you will find some reading material, code samples, and some additional resources that support today's topic and the upcoming lecture.
 

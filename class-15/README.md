@@ -1,8 +1,6 @@
-# Module 2: DS&A / Recap
+# Event Driven Applications
 
-Add the finishing touches to your Auth Server and integrate with your previously completed API Serve
-
-Implement a new Data Structure
+Today, we will leverage the ability of Javascript to raise events, monitor events, and perform operations in response to events occurring.
 
 ## Learning Objectives
 
@@ -10,15 +8,14 @@ Implement a new Data Structure
 
 #### Describe and Define
 
-- Data Structure Implementation -  <!-- To Be Completed By Instructor -->
+- Events
+- ... specifically, the Node event system
+- Event driven architecture
 
 #### Execute
 
-- API Deployed with full features/functionality
-  - Consistent Model Interface
-  - Dynamic Model Routing
-  - Fully Tested
-  - Fully Documented
+- Implement the Observer pattern using Publish/Subscribe
+- Create a modular, event based system.A
 
 ## Today's Outline
 

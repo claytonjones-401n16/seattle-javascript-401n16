@@ -1,12 +1,10 @@
-# LAB: TCP Server / Message Application
+# Module 3 Final Project: API Server
 
-Create an multi-server, event driven application that uses only events transmitted over a network to trigger logging based on activity.
+Implement a fully functional, authenticated and authorized API Server using the latest coding techniques
 
-We're going to continue working on the application for a company called **CAPS** - The Code Academy Parcel Service
+Over the course of the previous 2 modules, you have separately created an `auth-server` and an `api-server` ... In this lab, you will be integrating those 2 servers to create a single, authenticated API server.
 
-**CAPS** will simulate a delivery service where vendors (such a flower shops) will ship products using our delivery service and when delivered, be notified that their customers received what they purchased.
-
-As you can imagine, the CAPS system, the Vendors and the Drivers will all be on different computers and can't be using the same running application, so we'll need a way to keep everything in sync over the network.
+**NOTE** - You will be using this server as a base for all future work in this course. Other servers will be merged with it, and we'll be using it to serve data to our front-end applications later in the course. Completion of this final lab is essential to your future work being integrated.
 
 ## Before you begin
 
@@ -14,84 +12,52 @@ Refer to *Getting Started*  in the [lab submission instructions](../../../refere
 
 ## Getting Started
 
+> Create a new GitHub repository for this assignment, called `authenticated-api-server`
+
 ## Requirements
 
-The application must:
+- API Routes must now be protected with the proper permissions based on user capability, using Bearer Authentication and an ACL
+  - `app.get(...)` should require authentication only, no specific roles
+  - `app.post(...)` should require the `create` capability
+  - `app.put(...)` should require the `update` capability
+  - `app.patch(...)` should require the `update` capability
+  - `app.delete(...)` should require the `delete` capability
+- Clean and modularize Auth Middleware
+- Clean/Tighten the Auth Model
+- Stretch Goal
+  - Turn authorization/authentication on or off using a variable in your `.env` file
+  - This can allow us to run an API server that does or does not require authenticated users
 
-- Support multiple users on different machines communicating to one another
-- Simulate the order and delivery of an item from a vendor to a customer
-- The vendor should alert the system of a package to be delivered
-- A driver should alert the system when they've picked up the package
-- A driver should alert the system when they've delivered the package
+> **Implementation Notes/Advice**
 
-### Implementation Details and Requirements
-
-Create 3 separate services that can run independently on any machine
-
-### CSPS Application Server
-
-- Accepts inbound TCP connections on a port
-- Creates a pool of connected clients
-- On incoming data from a client
-  - Verify that the data is legitimate
-    - Is it JSON?
-    - Does it have an `event` and `payload` property?
-  - Broadcast the raw data back out to all connected clients
-
-### Vendor Application
-
-- Connects to the CSPS server
-- Every 5 seconds, simulate a new customer order
-  - Create a payload object with your store name, order id, customer name, address
-    - HINT: Have some fun by using the [faker](https://www.npmjs.com/package/faker) library to make up phony information
-  - Create a message object with the following keys:
-    - `event` - 'pickup'
-    - `payload` - the payload object you created in the above step
-  - Write that message (as a string) to the CSPS server
-- Listen for the `data` event coming in from the CSPS server
-  - When data arrives, parse it (it should be JSON) and look for the `event` property
-  - If the event is called `delivered`
-    - Log "thank you for delivering `id`" to the console
-  - Ignore any data that specifies a different event
-
-### Driver Application
-
-- Connects to the CSPS server
-- Listen for the `data` event coming in from the CSPS server
-  - When data arrives, parse it (it should be JSON) and look for the `event` property and begin processing...
-  - If the event is called `pickup`
-    - **Simulate picking up the package**
-      - Wait 1 second
-      - Log "picking up `id`" to the console
-      - Create a message object with the following keys:
-        - `event` - 'in-transit'
-        - `payload` - the payload from the data object you just received
-      - Write that message (as a string) to the CSPS server
-    - **Simulate delivering the package**
-      - Wait 3 seconds
-      - Create a message object with the following keys:
-        - `event` - 'delivered'
-        - `payload` - the payload from the data object you just received
-      - Write that message (as a string) to the CSPS server
-
-When running, the vendor and driver consoles should show their own logs. Additionally, the CSPS server should be logging everything.  Your console output should look something like this:
-
-<img src="lab-17-output.png" width="600">
-
-### Notes
-
-- You will need to start your servers up in the right order so that you can visually test things out.
-
-1. `csps` - needs to be up so that it can accept and re-emit events
-1. `vendor` - needs to have a running server to connect to, so that it can hear events
-1. `driver` to run and have the server hear your events
+- Create a new repository for this project, called `authenticated-api-server`
+- Import your previously built API server code and get it working
+- Add the `auth` module/folder from the `auth-server` to this working API server
+- Import and use the auth routes in the API server module
+- Using the auth routes, create some users with appropriate roles to test with.
+- Apply the appropriate auth middleware to each of your API (v1) routes to "protect" them with auth
 
 ### Testing
 
-- Write tests around all of your units
-- Test event handler function (not event triggers themselves)
-- Use spies to help testing your logger methods (assert that console.log was called right)
+- Tests from both previous servers should work in the new merged server...
+- 100% Test Coverage Goal For:
+  - Auth router
+    - Signup
+    - Sign In via username/password or Token
+  - Model Finder Middleware
+  - Auth Middleware
+    - Protected Routes
+  - OAuth Chooser
+  - API Routes
+    - Make assertions on the data shapes returned from the API routes
+
+#### Web Server Visual Tests
+
+- Open this [React Application](https://w638oyk7o8.csb.app/)
+- In the form at the top of the page, enter the URL to your API Server
+- This server is configured to use the routes noted in the first lab requirement
+- If your lab is working, this app will show your API Data!
 
 ## Assignment Submission Instructions
 
-Refer to the the [lab submission instructions](../../../reference/submission-instructions/labs/README.md) for the complete lab submission process and expectations
+Refer to the the [Submitting Express Server Lab Submission Instructions](../../../reference/submission-instructions/labs/express-servers.md) for the complete lab submission process and expectations

@@ -1,10 +1,12 @@
-# LAB: Event Driven Applications
+# LAB: TCP Server / Message Application
 
-Create an event driven application that "distributes" the responsibility for logging to separate modules, using only events to trigger logging based on activity.
+Create an multi-server, event driven application that uses only events transmitted over a network to trigger logging based on activity.
 
-We're going to build an application for a company called **CAPS** - The Code Academy Parcel Service
+We're going to continue working on the application for a company called **CAPS** - The Code Academy Parcel Service
 
 **CAPS** will simulate a delivery service where vendors (such a flower shops) will ship products using our delivery service and when delivered, be notified that their customers received what they purchased.
+
+As you can imagine, the CAPS system, the Vendors and the Drivers will all be on different computers and can't be using the same running application, so we'll need a way to keep everything in sync over the network.
 
 ## Before you begin
 
@@ -16,6 +18,7 @@ Refer to *Getting Started*  in the [lab submission instructions](../../../refere
 
 The application must:
 
+- Support multiple users on different machines communicating to one another
 - Simulate the order and delivery of an item from a vendor to a customer
 - The vendor should alert the system of a package to be delivered
 - A driver should alert the system when they've picked up the package
@@ -23,56 +26,65 @@ The application must:
 
 ### Implementation Details and Requirements
 
-Create the CAPS system as follows:
+Create 3 separate services that can run independently on any machine
 
-- `events.js` - Global Event Pool (shared by all modules)
-- `caps.js` - Main Hub Application
-  - Logs every event to the console with a timestamp and the event payload
-- `vendor.js` - Vendor Module
-  - Every 5 seconds, simulate a new customer order
-    - Emit a 'pickup' event
-    - Payload should be an object with your store name, order id, customer name, address
-      - HINT: Have some fun by using the [faker](https://www.npmjs.com/package/faker) library to make up phony information
-  - Whenever the 'delivered' event occurs
-    - Log "thank you" to the console
-- `driver.js` - Drivers Module
-  - On the 'pickup' event ...
-    - Wait 1 second
-      - Log "picked up" to the console.
-      - Emit an 'in-transit' event with the payload
-    - Wait 3 seconds
-      - Log "delivered" to the console
-      - Emit a 'delivered' event with the payload
+### CSPS Application Server
 
-When running, your console output should look something like this:
+- Accepts inbound TCP connections on a port
+- Creates a pool of connected clients
+- On incoming data from a client
+  - Verify that the data is legitimate
+    - Is it JSON?
+    - Does it have an `event` and `payload` property?
+  - Broadcast the raw data back out to all connected clients
 
-```javascript
-EVENT { event: 'pickup',
-  time: 2020-03-06T18:27:17.732Z,
-  payload:
-   { store: '1-206-flowers',
-     orderID: 'e3669048-7313-427b-b6cc-74010ca1f8f0',
-     customer: 'Jamal Braun',
-     address: 'Schmittfort, LA' } }
-DRIVER: picked up e3669048-7313-427b-b6cc-74010ca1f8f0
-EVENT { event: 'in-transit',
-  time: 2020-03-06T18:27:18.738Z,
-  payload:
-   { store: '1-206-flowers',
-     orderID: 'e3669048-7313-427b-b6cc-74010ca1f8f0',
-     customer: 'Jamal Braun',
-     address: 'Schmittfort, LA' } }
-DRIVER: delivered up e3669048-7313-427b-b6cc-74010ca1f8f0
-VENDOR: Thank you for delivering e3669048-7313-427b-b6cc-74010ca1f8f0
-EVENT { event: 'delivered',
-  time: 2020-03-06T18:27:20.736Z,
-  payload:
-   { store: '1-206-flowers',
-     orderID: 'e3669048-7313-427b-b6cc-74010ca1f8f0',
-     customer: 'Jamal Braun',
-     address: 'Schmittfort, LA' } }
-...
-```
+### Vendor Application
+
+- Connects to the CSPS server
+- Every 5 seconds, simulate a new customer order
+  - Create a payload object with your store name, order id, customer name, address
+    - HINT: Have some fun by using the [faker](https://www.npmjs.com/package/faker) library to make up phony information
+  - Create a message object with the following keys:
+    - `event` - 'pickup'
+    - `payload` - the payload object you created in the above step
+  - Write that message (as a string) to the CSPS server
+- Listen for the `data` event coming in from the CSPS server
+  - When data arrives, parse it (it should be JSON) and look for the `event` property
+  - If the event is called `delivered`
+    - Log "thank you for delivering `id`" to the console
+  - Ignore any data that specifies a different event
+
+### Driver Application
+
+- Connects to the CSPS server
+- Listen for the `data` event coming in from the CSPS server
+  - When data arrives, parse it (it should be JSON) and look for the `event` property and begin processing...
+  - If the event is called `pickup`
+    - **Simulate picking up the package**
+      - Wait 1 second
+      - Log "picking up `id`" to the console
+      - Create a message object with the following keys:
+        - `event` - 'in-transit'
+        - `payload` - the payload from the data object you just received
+      - Write that message (as a string) to the CSPS server
+    - **Simulate delivering the package**
+      - Wait 3 seconds
+      - Create a message object with the following keys:
+        - `event` - 'delivered'
+        - `payload` - the payload from the data object you just received
+      - Write that message (as a string) to the CSPS server
+
+When running, the vendor and driver consoles should show their own logs. Additionally, the CSPS server should be logging everything.  Your console output should look something like this:
+
+<img src="lab-17-output.png" width="600">
+
+### Notes
+
+- You will need to start your servers up in the right order so that you can visually test things out.
+
+1. `csps` - needs to be up so that it can accept and re-emit events
+1. `vendor` - needs to have a running server to connect to, so that it can hear events
+1. `driver` to run and have the server hear your events
 
 ### Testing
 
