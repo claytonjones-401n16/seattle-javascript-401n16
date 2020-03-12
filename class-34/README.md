@@ -1,6 +1,6 @@
-# `<Login />` and `<Auth />`
+# React Native
 
-Today, we will combine Authentication (valid user is logged in) and Authorization (what permissions does the user have) to create a UI that ensures that users only have access to content and functionality that they're granted access to.
+Description Here
 
 ## Learning Objectives
 
@@ -8,16 +8,13 @@ Today, we will combine Authentication (valid user is logged in) and Authorizatio
 
 #### Describe and Define
 
-- Role based access control
-- Cookies
-- Fetch and Superagent `Authorization` Headers
+- react-native development workflow
+- Expo development environment
 
 #### Execute
 
-- Create a rules based application
-- Authorize using both "Basic Authorization" and a "Bearer Token"
-- Store a login token for re-use
-- Hide and Show components, links, pages based on both login status and permissions
+- Create a quality mobile application
+- Utilize one or more device specific features
 
 ## Today's Outline
 

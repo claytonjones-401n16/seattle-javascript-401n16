@@ -1,6 +1,6 @@
-# LAB - Hooks API
+# Lab: Redux - Combined Reducers
 
-Using the React "Hooks" API, refactor a functioning application, upgrading the implementation from a class-based component state driven system in a more modern functional hooks-based state system.
+For this assignment, you will be continuing your work on the e-Commerce storefront, breaking up the store into multiple reducers and sharing functionality/data between components
 
 ## Before you begin
 
@@ -12,51 +12,73 @@ Open [Code Sandbox](http://codesandbox.io) and Create a new application titled w
 
 You will be submitting the URL to this working sandbox as part of your assignment.
 
-## Assignment: To Do Application
+## Assignment: E-Commerce Application
 
-Write a React application that will be able to manage your personal To Do List
+Write a React application that will serve as the online store for a fictional company
+
+For this assignment, we'll be using Redux to manage a list of categories and products as well as a shopping cart.
 
 ### Requirements
 
 - Design your application with a header, main section, and a footer
-- The overall styling is up to you
-- The header should present the application title
-- The main section must have:
-  - A Form where the user can a new item to the todo list
-    - Items should have the following fields:
-      - To Do Item Text
-      - Assigned To
-      - Status (complete/incomplete)
-      - Difficulty (number between 1 and 5)
-  - The list of items in the to do list
-    - Each item in list should show the text of the item as well as the assignee
-    - When clicked, toggle the "complete" status of the item.
-    - Items should be styled differently when complete/incomplete making their status visually obvious
+  - The overall styling is up to you
+  - Add an "Items in Cart" indicator to the header, like this: **Cart (0)**
+    - Or ... use your creativity to use an icon, count bubble, etc.
+- Home Page Operation:
+  - Display a list of categories
+  - When the user selects (clicks on) a category ...
+    - Identify that category as selected
+    - Show a list of products associated with the category
+    - The product listings should show the title, description, image, # in stock, and the price
+    - If the number in stock > 0, also show an "add to cart" button
+  - When a user clicks the "add to cart" button add the item to their cart
+    - On the page, show a running list of the items in the cart (just the titles)
+    - Change the `(0)` indicator in the header to show the actual number of items in the cart
+    - Reduce the number in stock for that product
 
 ### Implementation Notes/Details
 
-- Create separate components for each visual part of the application
-  - Header
-  - Footer
-  - To Do List
-- Each function must be a function component (no classes!)
-- Use a `useEffect()` hook to change the title of the browser with the complete/incomplete counts
-- Optional
-  - Separate the Form and List display elements into separate components within a wrapper component
-  - Use the wrapper to hold the state and methods
+Manage state in a Redux store with multiple reducers/actions
 
-### Stretch Goals
+- Categories
+  - State should be a list of categories as well as the active one
+    - Each category should have a normalized name, display name, and a description
+  - Create an action that will trigger the reducer to change the active category
+  - Update the active category in the reducer when this action is dispatched
+- Products
+  - State should be a list of all products
+    - Each product should have a category association, name, description, price, inventory count
+  - Create an action that will trigger the reducer to filter the product list when the active category is changed
+    - HINT: Different reducers can respond to the same actions
+  - Create a reducer that will filter the products list based on the active category
+  - Create an action that will trigger the reducer to reduce the stock counter
+  - Create a reducer that reduces the # in stock when that action is dispatched
+- Cart
+  - State should be an array of products that have been added (all product details)
+  - Create an action that will trigger the reducer to add the selected item to the cart
+    - **Hint:** this could be the same action type as you create for the Products reducer
+  - Create a reducer that adds the product to the array of items in state
 
-- Implement persistence with the live API to save data to the server
-- Start the application with the initial list of items pulled from the server
-  - Use the `useEffect()` hook to call the API on the initial render to get data from the API
-- Update the list state with these items from the server
-- When you add a note, in addition to displaying it on screen, POST it to the API
-- When you change the status of a note, in addition to displaying it on screen, PUT that change to the API
+Page Operation
+
+- Create the following components for the Home Page
+  - `<Categories />`
+    - Shows a list of all categories
+    - Dispatches an action when one is clicked to "activate " it
+  - `<Products />`
+    - Displays a list of products associated with the selected category
+  - `<SimpleCart />`
+    - Displays a short list (title only) of products in the cart
+
+### Stretch Goal
+
+- Add a "Remove from Cart" button to each item in the cart
+  - Change the indicator in the menu
+  - Add 1 back to the # in stock for that product
 
 ### Testing
 
-- Tests should assert all behavioral functionality
+- Tests are not required for this assignment
 
 ### Assignment Submission Instructions
 

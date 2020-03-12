@@ -1,4 +1,4 @@
-# Reading: Context API
+# Readings: Redux - Additional Topics
 
 Below you will find some reading material, code samples, and some additional resources that support today's topic and the upcoming lecture.
 
@@ -6,129 +6,60 @@ Review the Submission Instructions for guidance on completing and submitting thi
 
 ## Reading
 
-### Context
+### Other ways to build and manage a Redux store
 
-Context provides a means of passing state down the component tree through a Provider/Consumer relationship.
+Let's face it, Redux is great, but there's a lot of "boilerplate" code that you have write, and every developer or company will have their own internal pattern for putting it all together
 
-At as high a level as makes sense, a "provider" can make it's state available, along with means of altering it (methods).
+- File and Directory Names
+- Reducer and Action Styles
+- How do we model our data in the reducers
+
+There's a few projects out there that are attempting to unify the community around some simple standard ways to build stores so that as you move between projects, you'll recognize what you see
+
+#### Redux Toolkit
+
+The makers of Redux have recognized that Redux is complicated and have introduced a "Batteries Included, Highly Opinionated" framework for making stores called the **Redux Toolkit**
+
+This toolkit specifies a few different means of building a reducer and action set that work well together and are easier to understand and integrate
+
+Ultimately, your store code can be as simple and declarative as this:
 
 ```javascript
-import React from 'react';
 
-export const SettingsContext = React.createContext();
-
-class SettingsProvider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      changeTitleTo: this.changeTitleTo,
-      title: 'My Amazing Website',
-    };
+const postsSlice = createSlice({
+  name: 'posts',
+  initialState: [],
+  reducers: {
+    createPost(state, action) {},
+    updatePost(state, action) {},
+    deletePost(state, action) {}
   }
+})
 
-  changeTitleTo = title => {
-    this.setState({ title });
-  };
+// Extract the action creators object and the reducer
+const { actions, reducer } = postsSlice
+// Extract and export each action creator by name
+export const { createPost, updatePost, deletePost } = actions
+// Export the reducer, either as a default or named export
+export default reducer
 
-  render() {
-    return (
-      <SettingsContext.Provider value={this.state}>
-        {this.props.children}
-      </SettingsContext.Provider>
-    );
-  }
+// --------------- Sample Use -------------- //
+console.log(createPost({ id: 123, title: 'Hello World' }))
+// {type : "posts/createPost", payload : {id : 123, title : "Hello World"}}
+
+// Notice how createSlice transforms your defiition?
+console.log(postsSlice)
+/*
+{
+    name: 'posts',
+    actions : {
+        createPost,
+        updatePost,
+        deletePost,
+    },
+    reducer
 }
-
-export default SettingsProvider;
-
-```
-
-At the app level ...
-
-```javascript
-<SettingsContext>
-  <Content />
-</SettingsContext>
-```
-
-At the lower levels any component can "opt-in" and become a "consumer" and receive `this.state` from context.
-
-#### In a class style component, you can attach to context in 2 ways:
-
- Wrap your component with, and use a function to "get" the context object itself, which is `this.state` from the provider component.
-
-```javascript
-<SettingsContext.Consumer>
-  {context => {
-    console.log(context);
-  return (
-    <div>
-      <h1>{context.title}</h1>
-      <button onClick={() => context.changeTitleTo('Your Website')}>
-        Change Title
-      </button>
-    </div>
-  );
-  }}
-</SettingsContext.Consumer>
-```
-
-Statically declare a connection to the context provider and then use `this.context` to connect to state from the context provider
-
-```javascript
-import {SettingsContext} from '../settings/context.js';
-
-class MyComponent extends React.Component {
-
-  static contextType = SettingsContext;
-
-  render() {
-    return (
-      <div>
-        <h1>{this.context.title}</h1>
-        <button onClick={() => this.context.changeTitleTo('Your Website')}>
-          Change Title
-        </button>
-      </div>
-    );
-  )
-
-}
-```
-
-In a functional component, you can use the `useContext()` hook to tap right in.
-
-Returns and provides access to whatever your context provider exports
-
-In this example, our context provider gives us a `title` property and a `changeTitleTo()` method that we can call. This is much easier than referencing the context variable inline as you normally would.
-
-Note -- the context API is still critically important even with this hook available. Not every React shop is using hooks, so know both ways.
-
-```javascript
-import React from 'react';
-import faker from 'faker';
-import { useContext } from 'react';
-import { SettingsContext } from './settings/context';
-
-function Counter() {
-  const context = useContext(SettingsContext);
-
-  return (
-    <div>
-      <h2>{context.title}</h2>
-      <button
-        type="button"
-        onClick={() => context.changeTitleTo(faker.company.companyName())}
-      >
-        Change Title
-      </button>
-    </div>
-  );
-}
-
-export default Counter;
-
-```
+*/
 
 ## Additional Resources
 
@@ -136,6 +67,13 @@ export default Counter;
 
 ### Bookmark/Skim
 
-- [context api](https://reactjs.org/docs/context.html)
-- [hooks and context example](https://medium.com/swlh/snackbars-in-react-an-exercise-in-hooks-and-context-299b43fd2a2b)
-- [react context links](https://github.com/diegohaz/awesome-react-context)
+Alternative Redux Store Patterns
+
+- [Redux Toolkit (RTK)](https://redux-toolkit.js.org/)
+  - [Tutorial](https://redux-toolkit.js.org/tutorials/intermediate-tutorial)
+- [Ducks (modular redux)](https://github.com/erikras/ducks-modular-redux)
+
+Alternative State Managers
+
+- [MobX](https://mobx.js.org/getting-started.html)
+- [HookState](https://hookstate.js.org/)

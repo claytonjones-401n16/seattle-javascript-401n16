@@ -1,6 +1,6 @@
-# LAB - Component Based UI
+# LAB - Hooks API
 
-Create and style a counter application using React components.
+Using the React "Hooks" API, refactor a functioning application, upgrading the implementation from a class-based component state driven system in a more modern functional hooks-based state system.
 
 ## Before you begin
 
@@ -12,48 +12,52 @@ Open [Code Sandbox](http://codesandbox.io) and Create a new application titled w
 
 You will be submitting the URL to this working sandbox as part of your assignment.
 
-## Requirements
+## Assignment: To Do Application
 
-Write a **counter** application with the following features
+Write a React application that will be able to manage your personal To Do List
 
-- A Header with the style and text of your choosing
-- A Footer with the style and text of your choosing
-- A Count Display that starts at 0 and updates as the count changes
-- An Increment Button that increases the count by 1
-- An Decrement Button that decreases the count by 1
+### Requirements
 
-### Implementation Details
+- Design your application with a header, main section, and a footer
+- The overall styling is up to you
+- The header should present the application title
+- The main section must have:
+  - A Form where the user can a new item to the todo list
+    - Items should have the following fields:
+      - To Do Item Text
+      - Assigned To
+      - Status (complete/incomplete)
+      - Difficulty (number between 1 and 5)
+  - The list of items in the to do list
+    - Each item in list should show the text of the item as well as the assignee
+    - When clicked, toggle the "complete" status of the item.
+    - Items should be styled differently when complete/incomplete making their status visually obvious
 
-- Write an `App` component that serves as the container for all sub-components of this application
-- The `Header`, `Footer`, and `Counter` components should be managed in separate files/modules
-  - Properly `export` them as defaults
-  - Import them into the `App` Component using ES6 `import` statement
-- In the `Counter` component, manage state (current count) appropriately
-  - Start the value at 0
-  - Increase/Decrease the count by handling clicks on each of the buttons in the component
-  - Ensure that the display of the current count happens dynamically with the state changes
+### Implementation Notes/Details
 
-### Design Implementation
-
-- Create a file called `app.scss` and `import` that into the `App` component
-- Add some creative styling for the header, making use of SASS nesting
-- Alter the `app.scss` as follows:
-  - Alter your css rules to use a variable (i.e. $backgroundColor)
-  - "Pin" the header and footer to the top/bottom with the main/counter section taking up all remaining space.
-  - Get creative about styling the basic layout of the counter itself
-    - Might things change visually when the counter is `> 0` or `< 0`?
-    - Where would the buttons look best?
-    - Can you make the number "pop"
+- Create separate components for each visual part of the application
+  - Header
+  - Footer
+  - To Do List
+- Each function must be a function component (no classes!)
+- Use a `useEffect()` hook to change the title of the browser with the complete/incomplete counts
+- Optional
+  - Separate the Form and List display elements into separate components within a wrapper component
+  - Use the wrapper to hold the state and methods
 
 ### Stretch Goals
 
-- Keep track of the "polarity" of the `count` and change your style accordingly
-  - Be creative about how the display might change when the count is `> 0` or `< 0`?
-- Add a form with an input field.
-  - When a valid number is entered into the field, set the counter to the entered number and start the counting from there
+- Implement persistence with the live API to save data to the server
+- Start the application with the initial list of items pulled from the server
+  - Use the `useEffect()` hook to call the API on the initial render to get data from the API
+- Update the list state with these items from the server
+- When you add a note, in addition to displaying it on screen, POST it to the API
+- When you change the status of a note, in addition to displaying it on screen, PUT that change to the API
+
+### Testing
+
+- Tests should assert all behavioral functionality
 
 ### Assignment Submission Instructions
 
 Refer to the the [Submitting React Apps Lab Submission Instructions](../../../reference/submission-instructions/labs/react-apps.md) for the complete lab submission process and expectations
-
-> NOTE: For this assignment, **testing is not required**

@@ -1,4 +1,4 @@
-# Reading: Component Based UI
+# Reading: Hooks API
 
 Below you will find some reading material, code samples, and some additional resources that support today's topic and the upcoming lecture.
 
@@ -6,64 +6,62 @@ Review the Submission Instructions for guidance on completing and submitting thi
 
 ## Reading
 
-Component based UI systems like `React`, `Angular`, `Vue` and the like all operate on similar architectural principles.
+### Hooks
 
-- Rather than view an application as an enormous interconnected codebase, the application is a **composition** of `components` that work together to make the application work.
-- The secret sauce is how they work together.
-- We use Classes and Functions to classify functionality
-- We require what we need
-- We render it where we want
-- We pay attention to `state` and react as it changes.
+React hooks allow to to easily create and manage state in a **functional** component.
 
-### COMPONENTS!
+Hooks are JavaScript functions, but they impose additional rules:
 
-<img src="assets/components.png" width="400">
+- Hooks must be named with a `use` prefix (i.e. `useFishingPole`)
+- Only call Hooks at the top level. Don't call Hooks inside loops, conditions, or nested functions.
+- Only call Hooks from React function components. Don't call Hooks from regular JavaScript functions. (There is just one other valid place to call Hooks — your own custom Hooks. We'll learn about them in a moment.)
 
-#### STATE!
+#### Built In Hooks
 
-<img src="assets/state.jpg" width="400">
+##### `useState()`
 
-### React
+Returns a stateVariable and setterFunction for you to use to manage state in a functional component
 
-#### We will be using React in this course to learn these basic principles
+In this example ...
 
-As a component based system, React does an awful lot for us, principally, it gets out out of the way and makes it EASY to implement your application the way you see it, using familiar tools.
+- `clicks` is the state variable, which will store the number of clicks
+- `setClicks` is a function that is called to change the value of clicks
 
-> JSX looks like markup, but it's actually Javascript. If you had to code it out, you wouldn't...
+How does this work?
 
-JSX
-
-```javascript
-const element = () => {
-  return {
-    <h1 className="greeting">
-      Hello, world!
-    </h1>
-  }
-);
-```
-
-Behind the scenes...
+- by convention, we use `set` + `statevariable` (camel cased) to name this function
+- `useState()` takes a single param, which is the initial value to assign to the state variable
+- You can call your setter function .. i.e. `setClicks(7)` and the attribute value you call the function with is used as the new value for the state variable.
 
 ```javascript
-const element = React.createElement(
-  'h1',
-  {className: 'greeting'},
-  'Hello, world!'
-);
+ import React from 'react';
+ import { useState } from 'react';
+
+ function Counter() {
+   const [clicks, setClicks] = useState(0);
+
+   return (
+     <div>
+       <h2>Button has been clicked {clicks} time(s)</h2>
+       <button type="button" onClick={() => setClicks(clicks + 1)}>
+         Update Count
+       </button>
+     </div>
+   );
+ }
+
+ export default Counter;
 ```
 
 ## Additional Resources
 
 ### Videos
 
+- [making sense of hooks](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889)
+
 ### Bookmark/Skim
 
-- [react hello world](https://facebook.github.io/react/docs/hello-world.html)
-- [introducing JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
-- [rendering elements](https://facebook.github.io/react/docs/rendering-elements.html)
-- [sass](https://sass-lang.com/)
-- [sassmeister](http://www.sassmeister.com)
-- [sass cheatsheet](https://devhints.io/sass)
-- [react cheatsheet](https://devhints.io/react)
-- [another react cheatsheet](https://reactcheatsheet.com/)
+- [the state hook](https://reactjs.org/docs/hooks-state.html)
+- [hooks api](https://reactjs.org/docs/hooks-overview.html)
+- [hooks api reference](https://reactjs.org/docs/hooks-reference.html)
+- [effects hook](https://reactjs.org/docs/hooks-effect.html)

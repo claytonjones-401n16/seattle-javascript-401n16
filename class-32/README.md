@@ -1,8 +1,6 @@
-# Custom Hooks
+# Redux - Asynchronous Actions
 
-# Topic Here
-
-Description Here
+Connecting a Redux application to a backend service (i.e. an API) requires a bit of additional work, as asynchronous actions can cause issues with the internal Redux store management mechanisms. Today, we will be exploring Redux middleware, specifically "Thunk" which provides the mechanism to work asynchronously with Redux
 
 ## Learning Objectives
 
@@ -10,20 +8,13 @@ Description Here
 
 #### Describe and Define
 
-- The structure of a custom hook.
-- Describe use cases for custom hooks
-- Find 3rd party custom hooks
+- Redux Middleware
+- Thunk and why it's necessary
 
 #### Execute
 
-- Understand, Use, Create Custom React Hooks
-  - Form State
-  - Fetching API Data
-  - Realtime Connections
-  - `useEffect()` usage with connections
-  - Connect to a socket.io server
-    - Subscribe to remote events
-    - Emit events and data back to the server-
+- Perform asynchronous redux actions
+- Take advantage of lifecycle hooks
 
 ## Today's Outline
 

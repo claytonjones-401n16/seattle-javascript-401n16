@@ -1,6 +1,6 @@
-# Routing and Component Composition
+# Application State with Redux
 
-Apps written using a component framework such as React are generally composed of many components, assembled hierarchically to create a cohesive application. Components very often need to share state(data) and behaviors (methods). In addition to props and state, components can actually render other components as their children.
+Managing global state at the application level can definitely be a challenge. While the Context API provides a mechanism to accomplish this very tactically, Redux is a library that specializes in sharing state between components using a global "Store"
 
 ## Learning Objectives
 
@@ -8,21 +8,16 @@ Apps written using a component framework such as React are generally composed of
 
 #### Describe and Define
 
-- `props.children`
-- Composition vs Iteration
-- Routing to swap content
-- Routing to change page
+- Redux (10,000' view)
+- Global state management with a Redux Store (conceptually)
+- The elements that make up a "store"
+- The basic wiring (boilerplate) of Redux
+- The roles of Actions and Reducers
+- How the process of "Dispatching an Action" results in an update of the UI
 
 #### Execute
 
-- Implement React Routing via `<BrowserRouter />`
-  - Page Level
-  - Component Swapping
-- Compose components hierarchically
-- Create logical wrapper components
-- Create functional wrapper components
-- Utilize `children` in composed components
-  - Compose the `<List>, <If>` Component
+- Implement the core Redux boilerplate code required to participate in a store-based state managed application
 
 ## Today's Outline
 

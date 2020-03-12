@@ -1,77 +1,59 @@
-# LAB -  `<Login />` and `<Auth />`
+# LAB - React Native - Milestone 1: MVP
 
-Using Login Context, "protect" the To Do application by restricting access to the various application features based on the users' login status and capabilities.
+Create your first native phone/device application using React Native, tapping into at least 2 phone features.
 
 ## Before you begin
 
 Refer to *Getting Started*  in the [lab submission instructions](../../../reference/submission-instructions/labs/README.md) for complete setup, configuration, deployment, and submission instructions.
 
+Create a new GitHub repository titled with your course code and this lab number (i.e. js-401n15-class-10)
+
+You will be submitting the URL to the README (docs) at the root of this repository for your assignment.
+
 ## Getting Started
 
-Open [Code Sandbox](http://codesandbox.io) and Create a new application titled with your course code and this lab number (i.e. js-401n15-class-10)
+> **Confirm the following**
 
-You will be submitting the URL to this working sandbox as part of your assignment.
+- Install XCode (Mac Users)
+- Install Android Studio (All Users)
+  - Install 1 device emulator
+- Install expo-cli
+- Create an account at <https://expo.io>
+- Create a login for <https://snack.expo.io>
+- Create google play and apple developer accounts
 
-- You will need an Authenticated API Server, which supports login, auth, and ACL
-  - You should use your own, but as a last resort, you may use the [Official API Server](https://api-js401.herokuapp.com)
-    - Note: The deployed API server has the following user accounts (username:password) that you can use to login as a user with varying permissions
-      - admin:ADMIN (create, read, update, delete)
-      - editor:EDITOR (create, read, update)
-      - user:USER (read)
+## Assignment
 
-## Assignment: To Do Application
+Over the next 2 lab coding sessions, you will create your first Phone App. What it does and how it looks is up to you. This is an opportunity to play around with whats possible in React Native and to get a feel for how you can get into the various device features.
 
-Write a React application that will be able to manage your personal To Do List
+This is a 2-session assignment, after which you will live-demo your phone app to the class (at the start of class 43)
 
-For this assignment, we'll be using the Context API to add a few "settings" to the To Do application to make it work differently based on configuration.
+**Lab/Coding Session #1** - Focus on getting your dev system up and operational, getting "proof of life" and reaching your MVP in terms of baseline functionality
+
+**Lab/Coding Session #2** - Add in the device features, polish, and prepare for deployments.
 
 ### Requirements
 
-- Design your application with a header, main section, and a footer
-- The overall styling is up to you
-- The header should present the application title
-  - Render a login/logout option in the header of the app
-- The main section will house the To Do application itself
-  - A Form where the user can a new item to the todo list
-    - Items should have the following fields:
-      - To Do Item Text
-      - Assigned To
-      - Status (complete/incomplete)
-      - Difficulty (number between 1 and 5)
-  - The list of items in the to do list
-    - Each item in list should show the text of the item as well as the assignee
-    - When clicked, toggle the "complete" status of the item.
-    - Items should have a delete button associated with them
-      - When clicked, remove the item from the list
-  - Based on configuration
-    - Show a maximum of a certain number of items per screen
-    - Hide completed items from the list **OR** display them (with a style that indicates their status
-  - **Hide the entire interface until the user has logged in.**
-  - **Implement the following RBAC rules:**
-    - Logged In Users with 'read' permissions can see the summary/count
-    - Logged In Users with 'read' permissions can see the list of To Do Items
-    - Logged In Users with 'delete' permissions can click the records to mark them as complete
-    - Logged In Users with 'update' permissions can edit existing items
-    - Logged In Users with 'create' permissions can create new items
+- Use 2 screens / components
+- Use and share state between components/screens
+- Use at least 1 native device feature (Contacts, Camera, GPS, etc)
+- Properly Documented for End Users
+- Live Demo & Presentation
 
-### Implementation Notes/Details
+### Milestone 1 - MVP (This Lab)
 
-You have been provided, in the `practice` folder, a sample application built using the `<Login />` and `<Auth />` components built during class. Get this running first, and analyze it. You will need these components to complete the Authentication tasks specified above
+- Deliver your MVP for raw functionality
+- Your dev environment should be properly working
+- Other users should be able to scan your QR and see your app on any device
+- All of your core "features" should be working properly
+  - Un-Styled is fine. We're looking for things to buzz, light up, detect movement, etc.
 
-- You will notice that the login system is fundamentally broken
-  - What doesn't work? Why?
-  - Fix It before you move on
-- For practice, convert the `<LoginContext />`,`<Login />`and`<Auth />` components to be implemented as 'function' components instead of 'class' components
+### Documentation
 
-Once you have a working practice app, extract the components from it and separately build the To Do application, implementing Authentication and Authorization as described in the requirements
+For this assignment, instead of writing developer documentation, write end user documentation.
 
-### Testing
+"How do I use this application"
 
-- Write unit tests for the Login Context Component
-- Write unit tests for the Login/Auth components
-  - Hide/Show based on status
-- You will need to create some mocking interface to fake a server/login to simulate.
+We recommend using the "Steve Jobs" standards, which is to say that your app should be so easy to use and should do such an obvious thing that documentation isn't required.
 
-### Assignment Submission Instructions
-
-Refer to the the [Submitting React Apps Lab Submission Instructions](../../../reference/submission-instructions/labs/react-apps.md) for the complete lab submission process and expectations
+That said ... it's required. Shoot for the Jobs standard, but document this like you're going to sell it on the *App Store* (you might)

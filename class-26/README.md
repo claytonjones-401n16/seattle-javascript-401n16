@@ -1,8 +1,8 @@
-# Component Based UI
+# Hooks API
 
-Component based UI systems like `React`, `Angular`, `Vue` and the like all operate on a variation of "Atomic Design", using "Components" as the means of delivery.
+To this point, state has been owned and managed solely in Class based React components, using `this.state` with `this.setState()` and instance methods to manage it all.
 
-"Thinking in React" means re-evaluating how you look at a web application: Breaking down it's functional parts, data dependencies, behaviors, and styles into independent, deliverable, re-usable components.
+Newer versions of React now allow for "function components" to also manage their own state, using a newly exposed API, called "Hooks"
 
 ## Learning Objectives
 
@@ -10,29 +10,15 @@ Component based UI systems like `React`, `Angular`, `Vue` and the like all opera
 
 #### Describe and Define
 
-- SASS - Nesting and Variables
-- "Component Architecture"
-- Application and Component "State"
-- Debate/Discuss Libraries vs Frameworks
-- Basics of a React App
-  - index.html in public (root div)
-  - index.js as an untouchable "bootstrap" or "entry point"
-  - React Renders into that div
-  - JSX is actually javascript but it looks like markup
-  - Components can be classes or functions. What gets "returned" gets "rendered"
-    - Class - `render() { return(jsx) }`
-    - Function - `return(jsx)`
-  - Components can load and render each other
-  - Components can load their own css
+- Pros/Cons of Functional and Class Components
+- Use of the state hook for functional components
+- Use of the effect hook to tap into the lifecycle
+- Describe the lifecycle of a React component
 
 #### Execute
 
-- Begin a React project locally with `create-react-app`
-- Use codesandbox.io to work live on a React application
-- Create and render `Class` and `Functional` React components to the DOM
-- Add event listeners to React components
-- Update React component state
-- Style React applications/components using SASS
+- Use the Hooks API to manage state in a functional component
+- Use an effect hook to manage state at various (tactical) times during the life of a component
 
 ## Today's Outline
 

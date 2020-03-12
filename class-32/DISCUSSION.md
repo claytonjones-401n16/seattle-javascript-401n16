@@ -1,4 +1,4 @@
-# Reading - Custom Hooks
+# Readings: Redux - Asynchronous Actions
 
 Below you will find some reading material, code samples, and some additional resources that support today's topic and the upcoming lecture.
 
@@ -6,65 +6,68 @@ Review the Submission Instructions for guidance on completing and submitting thi
 
 ## Reading
 
-## Custom Hooks
+### Thunking for Data...
 
-- What are custom hooks?
-  - Extract duplicated logic from components
-  - Share common functionality
-    - But not state...
-  - Take advantage of useEffect lifecycle
+Using Redux actions to connect to remote APIs via Thunk Middleware
 
-- Common use cases -- make things DRY!
-  - Handle forms easily
-  - Pre-fetch API data
-  - Connect to services (like socket.io, Q, etc)
+Normally, action generators return a function, like this:
 
-  > Unlike a React component, a custom Hook doesn't need to have a specific signature. We can decide what it takes as arguments, and what, if anything, it should return. In other words, it's just like a normal function. Its name should always start with use so that you can tell at a glance that the rules of Hooks apply to it.
-
-Following is a simple example that demonstrates proper wiring.
-
-- Hooks are exported as a function, named as useXXX()
-- Hooks return data or behaviors (functions) that are required to reuse their internal functionality
-- Hooks are imported into components
-- Components can re-use the hook functionality or data/state as needed
-- Hooks do not render
-
-  use-food-hook.js
-
-  ```javascript
-  export default function useFoodHook(hungry) {
-    let food = 'cookies';
-    return hungry ? food : null;
+```javascript
+const get = (payload) => {
+  return {
+    type: 'GET',
+    payload: payload
   }
-  ```
+}
+```
 
-  Using a hook is a simple, then, as requiring it and calling it.
+But often, you'll need your actions to do some asynchronous action before you dispatch it to the reducer. For example, you may need to get something from a remote api.
 
-  my-component.js
+In this case, we want to set it up like this, where the action you dispatch from your React App returns a function, not an actual action object, which is what Redux **expects** and **requires**
 
-  ```javascript
-  import useFeedme from 'use-food-hook.js';
-  function myComponent() {
-    const food = useFeedMe(true);
-    return <div>{food}</div>
-  }
-  ```
+```javascript
+let api = 'https://api.mockable.io/api/v1/stuff';
+
+export const get = () => dispatch => {
+  return utils.fetchData(api).then(records => {
+    dispatch(getAction(records));
+  });
+};
+
+const getAction = payload => {
+  return {
+    type: 'GET',
+    payload: payload,
+  };
+};
+```
+
+So, we will implement special redux middleware, called "thunk", which inspects every dispatched action and then either lets it go through (in the case of a normal action that returns an object) or it processes the function and then dispatches what that function returns.
+
+Notice in the example above, that the function we ran for the action is curried, and receives `dispatch()`, which it calls with the payload it got from the server.
+
+**What does thunk middleware look like?**
+
+```javascript
+export default store => next => action =>
+  typeof action === 'function'
+    ? action(store.dispatch, store.getState)
+    : next(action);
+```
+
+In Redux, middleware is implemented as a curried function that ultimately evaluates the action and determines whether it's a function or not. If so, it gets invoked with the store's `dispatch()` and `getState()` methods. Otherwise (a normal action creator), it simply runs your action.
+
+At its base level, this is all we really need.  However, we're going to be using the `redux-thunk` npm module in our production applications, as it provides more stability and error checking for us.
 
 ## Additional Resources
 
 ### Videos
 
+* [dan abramov on suspense](https://www.youtube.com/watch?v=6g3g0Q_XVb4)
+
 ### Bookmark/Skim
 
-Authoring
-
-- [custom hooks - all you need to know](https://www.telerik.com/blogs/everything-you-need-to-create-a-custom-react-hook)
-- [async hooks](https://dev.to/vinodchauhan7/react-hooks-with-async-await-1n9g)
-- [useReducer Hook](https://reactjs.org/docs/hooks-reference.html#usereducer)
-- [react custom hooks](https://reactjs.org/docs/hooks-custom.html)
-
-Hooks Lists/Collections
-
-- [use hooks](https://usehooks.com/)
-- [hooks list](https://github.com/rehooks/awesome-react-hooks)
-- [10 essential react hooks](https://blog.bitsrc.io/10-react-custom-hooks-you-should-have-in-your-toolbox-aa27d3f5564d)
+* [async actions](https://redux.js.org/advanced/asyncactions)
+* [thunk middleware](https://github.com/reduxjs/redux-thunk)
+* [redux thunk](https://alligator.io/redux/redux-thunk/)
+* [suspense](https://blog.logrocket.com/async-rendering-in-react-with-suspense-5d0eaac886c8) (alpha/beta)

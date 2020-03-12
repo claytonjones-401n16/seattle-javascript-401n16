@@ -1,6 +1,6 @@
-# Props and State
+# Context API
 
-Applications are comprised of many components, usually working together to perform a higher level task. As such, they'll all need access to state, methods to read/modify state, and an ability to respond to triggered actions in other, related components. Today, we'll explore how React applications do this, using JSX attributes, better known as `props`
+Using the React "Context API" we can create an manage state in a more "global" fashion, making state that matters to your entire application easily available to ... your entire application.
 
 ## Learning Objectives
 
@@ -8,20 +8,14 @@ Applications are comprised of many components, usually working together to perfo
 
 #### Describe and Define
 
-- Functions as properties/attributes
-- State (or parts of state) as properties/attributes
+- Global State
+- Providers and Consumers
+- Wrapper Components
 
 #### Execute
 
-- Pass props from a container component to a child
-- Execute methods in a parent component from a child
-- Manage state from events
-- Handle form input
+- Use the React Context API to tactically manage global state.
 
 ## Today's Outline
 
 <!-- To Be Completed By Instructor -->
-
-- Topic 1
-- Topic 2
-- ...

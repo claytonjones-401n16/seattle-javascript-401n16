@@ -1,42 +1,29 @@
-# Reading: `<Login />` and `<Auth />`
+# Reading: React Native
 
 Below you will find some reading material, code samples, and some additional resources that support today's topic and the upcoming lecture.
 
 Review the Submission Instructions for guidance on completing and submitting this assignment.
 
-## Read
+## Reading
 
-### Authentication + Role Based Authorization
+### React Native Ecosystem
 
-What problems do we need to solve for?
+- What is native development?
+- Why is it important to develop a native app vs a responsive react app?
+- It's still just state and components
+  - But no HTML or CSS
+  - You can still "style" things using the framework guidelines
 
-- Is this a valid user (are they logged in)?
-- What is the user authorized to do?
-  - Which parts of our application care about this?
-  - How can we determine this?
-    - What's in the token?
-    - Contact between the UI and the API
-- How do we make this easy to use?
+#### Expo
 
-### Proposal
+- Expo Is the dev environment
+- Snack is an online sandbox
+- expo-cli is the local equivalent to create-react-app (you can eject)
+- Running locally, you can use your own device or the official simulator
+  - Only Apple users can test iPhones
+  - Anyone can test android, but you need to start up an ADB from The Android Studio IDE
 
-`<Auth />` component
-
-- Based on your permissions and login status, it either gives you access to a component or jsx or hides it.
-- Must not use Redux
-  - Why? We don't want to force implementors into a specific state management system.
-
-```javascript
-// The div only shows if you are logged in
-  <Auth>
-    <div />
-  </Auth>
-
-// The div only shows if you are logged in AND have read permissions
-  <Auth capability="read">
-    <div />
-  </Auth>
-```
+## Demo
 
 ## Additional Resources
 
@@ -44,6 +31,9 @@ What problems do we need to solve for?
 
 ### Bookmark/Skim
 
-- [what is rbac?](https://digitalguardian.com/blog/what-role-based-access-control-rbac-examples-benefits-and-more)
-- [react-cookies component](https://www.npmjs.com/package/react-cookies)
-- [react-cookie library](https://www.npmjs.com/package/react-cookie)
+- [getting started with react native](https://facebook.github.io/react-native/docs/getting-started)
+- [react native basics](https://facebook.github.io/react-native/docs/tutorial) (Tutorial)
+- [react native](https://facebook.github.io/react-native/)
+- [expo](https://expo.io/)
+- [expo snack](https://snack.expo.io/)
+- [ejecting](https://docs.expo.io/versions/latest/expokit/eject)

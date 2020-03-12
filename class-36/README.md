@@ -1,6 +1,6 @@
-# Application State with Redux
+# Gatsby, next.js, and other JS Frameworks
 
-Managing global state at the application level can definitely be a challenge. While the Context API provides a mechanism to accomplish this very tactically, Redux is a library that specializes in sharing state between components using a global "Store"
+React is great, but there are negative implications with regards to SEO (Search Engine Optimization) as well as with so many programming patterns, especially when it comes to page based applications. **Gatsby** and **next.js** are 2 frameworks that address both concerns
 
 ## Learning Objectives
 
@@ -8,16 +8,15 @@ Managing global state at the application level can definitely be a challenge. Wh
 
 #### Describe and Define
 
-- Redux (10,000' view)
-- Global state management with a Redux Store (conceptually)
-- The elements that make up a "store"
-- The basic wiring (boilerplate) of Redux
-- The roles of Actions and Reducers
-- How the process of "Dispatching an Action" results in an update of the UI
+- Server-Side Rendering and SEO
+- The Gatsby Ecosystem
+- The Next.js Ecosystem
 
 #### Execute
 
-- Implement the core Redux boilerplate code required to participate in a store-based state managed application
+- Build a simple Blog site with Gatsby
+- Build a simple Blog site with Next.js
+- Tackle new Javascript Frameworks
 
 ## Today's Outline
 

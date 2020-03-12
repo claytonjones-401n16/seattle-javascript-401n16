@@ -1,6 +1,4 @@
-# LAB - React Testing and Deployment
-
-Write Unit and Acceptance tests for your Counter application; Deploy to the cloud
+# LAB - Custom Hooks
 
 ## Before you begin
 
@@ -8,55 +6,62 @@ Refer to *Getting Started*  in the [lab submission instructions](../../../refere
 
 ## Getting Started
 
-Starter code has been provided for you in the `/lab/starter-code` folder.
+Open [Code Sandbox](http://codesandbox.io) and Create a new application titled with your course code and this lab number (i.e. js-401n15-class-10)
 
-For this assignment, work locally instead of at Code Sandbox, as you'll need to create testing snapshots, build your docs and view the production build files.
+You will be submitting the URL to this working sandbox as part of your assignment.
 
-Create a new repository for this assignment, copy the starter-code folder contents into it, and run an npm install to get started.
+## Assignment: To Do Application
 
-## Requirements
+Write a React application that will be able to manage your personal To Do List
 
-### Write Tests
+### Requirements
 
-* Write tests to cover the counter component
-  * For Up and Down events
-    * Assert state changes properly
-    * Assert that state is being transferred to the DOM
-    * Assert DOM stability via snapshot testing.
-      * i.e. take a snapshot, change the markup/jsx, assert failure.  Put it back to make it all good.
-* Add some sleek and amazing styling, different from the previous lab.
+- Design your application with a header, main section, and a footer
+- The overall styling is up to you
+- The header should present the application title
+- The main section must have:
+  - A Form where the user can a new item to the todo list
+    - Items should have the following fields:
+      - To Do Item Text
+      - Assigned To
+      - Status (complete/incomplete)
+      - Difficulty (number between 1 and 5)
+  - The list of items in the to do list
+    - Each item in list should show the text of the item as well as the assignee
+    - When clicked, toggle the "complete" status of the item.
+    - Items should be styled differently when complete/incomplete making their status visually obvious
+    - Items should have a delete button associated with them
+      - When clicked, remove the item from the list
 
-### Deploy the application
+### Implementation Notes/Details
 
-* Create a new repository for your application at Github and connect your sandbox to it.
-* Clone the repo to your local machine
-* Make sure that 'aws.yml' and 'build' are in your .gitignore, and then commit your code back to GitHub
-* Perform an `npm install`
-* Perform an `npm run build`
-  * You should now have a fully functional static build in the builds folder
-  * You can verify this by running `live-server` from within the build folder
-* In your README, Submit all 3 deployed URLs from the below steps as well as your GitHub Actions test report and documentation links.
+- The application must be connected to a running API server
+  - On load, display all of the to do items from the database, including styling for their status
+  - When adding an item, issue a "POST" request to the API server
+  - When marking items complete, issue a "PUT" request to the API server for the item
+  - When deleting items, issue a "DELETE" request to the API server for the item
+- Create separate components for each visual part of the application
+  - Header
+  - Footer
+  - To Do List
+- Each function must be a function component (no classes!)
+- Use the `useForm()` hook to manage the "Add Item" form
+- Create a new custom hook called `useFetch()` to abstract the API calls
+  - This hook should accept the URL to the API server, the REST method, and (when relevant) the BODY (JSON) of the request
+  - Additionally, your hook will likely have to handle CORS, Content-Type and possibly authentication
+- Optional
+  - Separate the Form and List display elements into separate components within a wrapper component
+  - Use the wrapper to hold the state and methods
 
-#### Netlify
+### Resources
 
-* Setup Netlify to deploy from your master branch
+- You will need a deployed API server to store your data
+  - Augment your API server from earlier in the course by adding the 'todo' collection
 
-#### AWS S3 Website
+If you are having issues or troubles getting these servers deployed on your own, you may connect to a shared API. We highly recommend using your own, however.
 
-* Run the build script `npm run build` for your application
-* Do a manual deployment of the `build` folder contents to a new Bucket and Cloud at AWS
-* Set the permissions to public
-* Enable Static Website Hosting
+- [API Server](https://api-js401.herokuapp.com/api/v1)
 
-#### AWS Elastic Beanstalk
-
-* Use the `aws-tools` npm package to create an aws.yml file
-* Prepare an automated deployment through Cloud Formation using the `aws.yml` file you've created
-* Your App should auto-deploy to AWS Cloudfront.
-
-### Assignment Submission Instructions
+## Assignment Submission Instructions
 
 Refer to the the [Submitting React Apps Lab Submission Instructions](../../../reference/submission-instructions/labs/react-apps.md) for the complete lab submission process and expectations
-
-
-* Submit links to both deployments at AWS

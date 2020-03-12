@@ -1,6 +1,6 @@
-# LAB - Context API
+# Lab: Redux - Additional Topics
 
-Create a React application that wraps the entire `<App/>` with a context provider, created using Context API. Then, create multiple components that act as consumers to your context, using it in various ways.
+For this assignment, you will be continuing your work on the e-Commerce storefront, adding more usability and a higher degree of fidelity for your users.
 
 ## Before you begin
 
@@ -12,61 +12,90 @@ Open [Code Sandbox](http://codesandbox.io) and Create a new application titled w
 
 You will be submitting the URL to this working sandbox as part of your assignment.
 
-## Assignment: To Do Application
+## Assignment: E-Commerce Application
 
-Write a React application that will be able to manage your personal To Do List
+Write a React application that will serve as the online store for a fictional company
 
-For this assignment, we'll be using the Context API to add a few "settings" to the To Do application to make it work differently based on configuration.
+For this assignment, we'll be using Redux to manage a list of categories and products as well as a shopping cart.
 
 ### Requirements
 
 - Design your application with a header, main section, and a footer
-- The overall styling is up to you
-- The header should present the application title
-- The main section must have:
-  - A Form where the user can a new item to the todo list
-    - Items should have the following fields:
-      - To Do Item Text
-      - Assigned To
-      - Status (complete/incomplete)
-      - Difficulty (number between 1 and 5)
-  - The list of items in the to do list
-    - Each item in list should show the text of the item as well as the assignee
-    - When clicked, toggle the "complete" status of the item.
-    - Items should have a delete button associated with them
-      - When clicked, remove the item from the list
-  - Based on configuration
-    - Show a maximum of a certain number of items per screen
-    - Hide completed items from the list **OR** display them (with a style that indicates their status)
+  - The overall styling is up to you
+- Add a navigation bar to the header with 2 links:
+  - **Home**
+    - When clicked, show the "Home Page" with the categories list and filtered list of products
+  - **Cart (0)**
+    - When clicked, show the full list of items in the users' shopping cart
+- Home Page Operation:
+  - Display a list of categories
+  - When the user selects (clicks on) a category ...
+    - Identify that category as selected
+    - Show a list of products associated with the category
+    - The product listings should show the title, description, image, and the price
+    - Add a "View Details" button to each product listing
+  - When the "View Details" button is clicked for a product:
+    - Open a modal with the full product details, including the number in stock
+    - If the number in stock > 0, also show an "add to cart" button
+    - When a user clicks the "add to cart" button add the item to their cart
+      - On the page, show a running list of the items in the cart (just the titles)
+      - Change the `(0)` indicator in the header to show the actual number of items in the cart
+    - Reduce the number in stock for that product
+- Cart Page Operation
+  - When showing the Cart Page ...
+  - Show a full listing of each product in the users' cart (name, description, etc)
 
 ### Implementation Notes/Details
 
-> Your application should be connected to a remote API
+> Load the category and product list from a remote API on page load. Update the product stock when adding items to (or removing from) the cart
+> Continue to use multiple reducers
 
-- Create a `context` for managing application settings
-  - Display or Hide completed items (boolean)
-  - Number of items to display per screen (number)
-  - You may manually set (hard code) those state settings in the context provider
+- Categories
+  - State should be a list of categories as well as the active one
+    - Each category should have a normalized name, display name, and a description
+  - Create an action that will trigger the reducer to change the active category
+  - Update the active category in the reducer when this action is dispatched
+- Products
+  - State should be a list of all products
+    - Each product should have a category association, name, description, price, inventory count
+  - Create an action that will trigger the reducer to filter the product list when the active category is changed
+    - HINT: Different reducers can respond to the same actions
+  - Create a reducer that will filter the products list based on the active category
+  - Create an action that will trigger the reducer to reduce the # in stock counter
+    - This should perform an update of this product on the server using the API to keep the data accurate
+  - Create a reducer that reduces the # in stock when that action is dispatched
+    - This should use the information received from the server after the update from the action
+- Cart
+  - State should be an array of products that have been added (all product details)
+  - Create an action that will trigger the reducer to add the selected item to the cart
+    - **Hint:** this could be the same action type as you create for the Products reducer
+  - Create a reducer that adds the product to the array of items in state
 
-Pagination
+Pages
 
-- Only display the first `n` items in the list, where `n` is the number to display per screen in your context.
-  - If you have more than `n` items in the list, add a button labeled `Next` that will replace the list with the next `n` items in the list.
-  - If you are past the first `n` items (i.e. on page 2 or higher), add a button labeled `Previous` that will replace the list with the previous `n` items in the list.
-- Filter the completed items out of the list (or not) based on the appropriate setting in context.
+- Add `<BrowserRouter/>` to your application so that you can build the menu in the header
+- Create the following components for the Home Page
+  - `<Categories />`
+    - Shows a list of all categories
+    - Dispatches an action when one is clicked to "activate " it
+  - `<Products />`
+    - Displays a list of products associated with the selected category
+  - `<SimpleCart />`
+    - Displays a short list (title only) of products in the cart
+- Create the following components for the Cart Page
+  - `<Cart />`
+    - Displays a list of products currently in the cart
+
+### Stretch Goals
+
+- Add a "Remove from Cart" button to each item in the cart
+  - Change the indicator in the menu
+  - Add 1 back to the # in stock for that product
+- Refactor your Redux Store to use Redux Toolkit
 
 ### Testing
 
-- Do a deep mount of the app, and set tests to make assertions on the child components that consume context from the Provider.
-  - Can they see context?
-  - Can they interact via published functions?
-
-### Stretch Goal
-
-- Provide a "Settings" page for your users (Use Routing!)
-- Allow the user to change the number change the context settings
-  - Your context will need to expose methods in state...
-- Save their settings in local storage
+- Test the end to end operation of the application
 
 ### Assignment Submission Instructions
 

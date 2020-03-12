@@ -1,6 +1,6 @@
-# LAB - Routing and Component Composition
+# LAB - Application State with Redux
 
-Implement routing and composed components into the To Do Application.
+For this assignment, you will be starting the process of creating an e-Commerce storefront
 
 ## Before you begin
 
@@ -8,53 +8,50 @@ Refer to *Getting Started*  in the [lab submission instructions](../../../refere
 
 ## Getting Started
 
-## Requirements
+Open [Code Sandbox](http://codesandbox.io) and Create a new application titled with your course code and this lab number (i.e. js-401n15-class-10)
 
-Update the RESTy application as follows:
+You will be submitting the URL to this working sandbox as part of your assignment.
 
-- Add a menu bar to the header
-  - Link labeled "Home" that links to '/' and shows the search form/results page
-  - Link labeled "History" that links to '/history' and loads the history page
+## Assignment: E-Commerce Application
 
-Home Page
+Write a React application that will serve as the online store for a fictional company
 
-- Completely hide the output (Headers & Results) when there are none to display
-- Display any fetch/load errors in place of the results area, if they occur
-- Add a "Loading" indicator while fetching
-  - When the user clicks the "Go!" button, show a loading icon on the page
-  - When the fetching of results is complete, remove the loading icon and show the results
+For this assignment, we'll be using Redux to manage a list of categories and products
 
-History Page
+### Requirements
 
-- Maintain a list of every API call the user has made
-- On the History page, show a list of ever previous API call
-  - Clicking on an entry shows more details
-  - Show a button labeled "Re-Run" that would execute that API call again and shows the home page
+- Design your application with a header, main section, and a footer
+  - The overall styling is up to you
+- Display a list of categories
+- When the user selects (clicks on) a category ...
+  - Identify that category as selected
+  - Show a list of products associated with the category
 
-## Implementation Notes/Details
+### Implementation Notes/Details
 
-- Import `BrowserRouter` into your index, and wrap the `<App />` with it
-- In the `<App />`, use routes to display the correct components, based on the route
-- Alter the `<Results />` component to use a conditional component such as `<If>` to hide/show the results pane when there are none, and to show/hide the loading image during the fetch process
-- Create `<Header />` that has the nav bar, and uses `<NavLink />` components to route the user the Home or History pages
-- Create a new `<History/>` component that will:
-  - Show a list of URLs you've loaded before
-  - Add a button to each to re-run the search
-  - Redirect to the home page to show the results
+- Manage state in a Redux store
+- Categories
+  - State should contain a list of categories as well as the active category
+    - Each category should have a normalized name, display name, and a description
+  - Create an action that will trigger the reducer to change the active category
+  - Update the active category in the reducer when this action is dispatched
+- Products
+  - State should be a list of all products
+    - Each product should have a category association, name, description, price, inventory count
+  - Create an action that will trigger the reducer to filter the product list when the active category is changed
+    - HINT: Different reducers can respond to the same actions
+  - Create a reducer that will filter the products list based on the active category
+
+- Create 2 components
+  - `<Categories />`
+    - Shows a list of all categories
+    - Dispatches an action when one is clicked to "activate" it
+  - `<Products />`
+    - Displays a list of products associated with the selected category
 
 ### Testing
 
-- Complete basic render testing on the application
-- Test state changes
-- Modal visibility on state change
-  - Is it rendered?
-  - Is the correct to do item in it?
-
-### Stretch Goals
-
-- Create an `npm` account and an organization
-- Write tests for an publish your `<If />` component set to `npm`
-- Now, you can `npm install` and `import` them in any project.
+- Tests are not required for this assignment
 
 ### Assignment Submission Instructions
 

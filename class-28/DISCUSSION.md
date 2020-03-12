@@ -1,4 +1,4 @@
-# Reading: Props and State
+# Reading: Context API
 
 Below you will find some reading material, code samples, and some additional resources that support today's topic and the upcoming lecture.
 
@@ -6,94 +6,129 @@ Review the Submission Instructions for guidance on completing and submitting thi
 
 ## Reading
 
-## Forms and Inputs
+### Context
 
-React form elements maintain internal state. Think of React inputs as stateful child components. This means that we must manage the state of inputs through our own stateful component and one way data binding. The creation of a parent component (which we'll refer to as _form-container_), manages the state for all child components of the form and passes any necessary state down into it's inputs through the use of `props`. Each input has an `onChange` event that we can handle and use to update our _form-container's_ state each time the user interacts with an input.
+Context provides a means of passing state down the component tree through a Provider/Consumer relationship.
 
-### Props
-
-Components accept arbitrary inputs called `props`. In JSX, props are passed into a component with a syntax that looks like HTML attributes. These are the equivalent of function params.
-
-In actuality, `props` is the name of the object passed into a component constructor and any prop added to a component in the JSX will be accessible as a property on `props`.
-
-After `props` is passed into the constructors `super` function, they are available on the context by using `this.props`.
-
-#### Props Example ... the way we get to use them
-
-``` javascript
-const element = (
-  <h1 className="greeting">
-    Hello, world!
-  </h1>
-);
-```
-
-#### Props -- what's actually happening under the hood
+At as high a level as makes sense, a "provider" can make it's state available, along with means of altering it (methods).
 
 ```javascript
+import React from 'react';
 
-const element = React.createElement(
-  'h1',
-  {className: 'greeting'},
-  'Hello, world!'
-);
+export const SettingsContext = React.createContext();
 
-```
-
-#### Props can be data or functions
-
-In javascript, we can pass functions around like variables. We've been doing this all along (named callback functions in express and jQuery for example).  Now we get to really harness that power!
-
-When this renders ...
-
-* Foo will draw Bar
-* Bar will draw a button
-* When that button gets clicked, it's `onClick` action fires
-  * That action runs the method `this.props.handleClick`
-  * That method runs in `<Foo>` ... `<Foo>` passed it down to `<Bar>` essentially telling it what it wants it to do.
-* This is a means of passing not only **Data** but **Behavior** down the component tree
-
-``` javascript
-
-class Foo extends React.Component {
-  constructor(props){
-    super(props)
-  }
-
-  screamLoud() {
-    console.log("OUCH");
-  }
-
-  render(){
-    return (
-      <div>
-        <Bar handleClick={this.screamLoud} />
-      </div>
-    )
-  }
-}
-
-class Bar extends React.Component {
-
+class SettingsProvider extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      changeTitleTo: this.changeTitleTo,
+      title: 'My Amazing Website',
+    };
   }
+
+  changeTitleTo = title => {
+    this.setState({ title });
+  };
 
   render() {
-    <div>
-      <button onClick={this.props.handleClick}>Click</button>
-    </div>
+    return (
+      <SettingsContext.Provider value={this.state}>
+        {this.props.children}
+      </SettingsContext.Provider>
+    );
   }
-
 }
 
-// Render the element ...
-<Foo />
+export default SettingsProvider;
+
 ```
 
-### One Way Data flow
+At the app level ...
 
-State can only be passed from parent component to a child component through the use of `props`. This enforces the idea of one way data flow. One way data flow is a way of describing that state can only be passed down the component tree (not up). If a child wants to pass some data to a parent, the parent can pass a function to the child through `props` and the child may invoke that function and pass it data for the parent to manage.
+```javascript
+<SettingsContext>
+  <Content />
+</SettingsContext>
+```
+
+At the lower levels any component can "opt-in" and become a "consumer" and receive `this.state` from context.
+
+#### In a class style component, you can attach to context in 2 ways:
+
+ Wrap your component with, and use a function to "get" the context object itself, which is `this.state` from the provider component.
+
+```javascript
+<SettingsContext.Consumer>
+  {context => {
+    console.log(context);
+  return (
+    <div>
+      <h1>{context.title}</h1>
+      <button onClick={() => context.changeTitleTo('Your Website')}>
+        Change Title
+      </button>
+    </div>
+  );
+  }}
+</SettingsContext.Consumer>
+```
+
+Statically declare a connection to the context provider and then use `this.context` to connect to state from the context provider
+
+```javascript
+import {SettingsContext} from '../settings/context.js';
+
+class MyComponent extends React.Component {
+
+  static contextType = SettingsContext;
+
+  render() {
+    return (
+      <div>
+        <h1>{this.context.title}</h1>
+        <button onClick={() => this.context.changeTitleTo('Your Website')}>
+          Change Title
+        </button>
+      </div>
+    );
+  )
+
+}
+```
+
+In a functional component, you can use the `useContext()` hook to tap right in.
+
+Returns and provides access to whatever your context provider exports
+
+In this example, our context provider gives us a `title` property and a `changeTitleTo()` method that we can call. This is much easier than referencing the context variable inline as you normally would.
+
+Note -- the context API is still critically important even with this hook available. Not every React shop is using hooks, so know both ways.
+
+```javascript
+import React from 'react';
+import faker from 'faker';
+import { useContext } from 'react';
+import { SettingsContext } from './settings/context';
+
+function Counter() {
+  const context = useContext(SettingsContext);
+
+  return (
+    <div>
+      <h2>{context.title}</h2>
+      <button
+        type="button"
+        onClick={() => context.changeTitleTo(faker.company.companyName())}
+      >
+        Change Title
+      </button>
+    </div>
+  );
+}
+
+export default Counter;
+
+```
 
 ## Additional Resources
 
@@ -101,8 +136,6 @@ State can only be passed from parent component to a child component through the 
 
 ### Bookmark/Skim
 
-* [setState explained](https://css-tricks.com/understanding-react-setstate/)
-* [handling events](https://facebook.github.io/react/docs/handling-events.html)
-* [forms](https://facebook.github.io/react/docs/forms.html)
-* [state and lifecycle](https://facebook.github.io/react/docs/state-and-lifecycle.html)
-* [components and props](https://facebook.github.io/react/docs/components-and-props.html)
+- [context api](https://reactjs.org/docs/context.html)
+- [hooks and context example](https://medium.com/swlh/snackbars-in-react-an-exercise-in-hooks-and-context-299b43fd2a2b)
+- [react context links](https://github.com/diegohaz/awesome-react-context)

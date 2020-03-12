@@ -1,6 +1,6 @@
-# Context API
+# Redux - Additional Topics
 
-Using the React "Context API" we can create an manage state in a more "global" fashion, making state that matters to your entire application easily available to ... your entire application.
+With the core concepts of Redux in place, we can turn our attention to alternate means of store management, and exploring how Redux can help us to add fidelity to our application process
 
 ## Learning Objectives
 
@@ -8,13 +8,16 @@ Using the React "Context API" we can create an manage state in a more "global" f
 
 #### Describe and Define
 
-- Global State
-- Providers and Consumers
-- Wrapper Components
+- Alternate Redux Store Managers
+  - Ducks
+  - Redux Toolkit
+- Other ways to manage state
+  - MobX
 
 #### Execute
 
-- Use the React Context API to tactically manage global state.
+- A complete React/Redux Application
+- Migration of simple Redux to either Ducks or Toolkit
 
 ## Today's Outline
 
