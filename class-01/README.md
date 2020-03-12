@@ -1,4 +1,4 @@
-# Class 01 --- _Node Ecosystem, TDD, CI/CD_
+# Class 01 --- Node Ecosystem, TDD, CI/CD
 
 ## Lecture Videos 
 
