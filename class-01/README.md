@@ -1,12 +1,9 @@
-# Class 01 
-
-## _Node Ecosystem, TDD, CI/CD_
+# Class 01 --- _Node Ecosystem, TDD, CI/CD_
 
 ### Lecture Videos 
 
-|                                                              |                                                              |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [Saturday Morning](https://frontrowviews.com/Home/Event/Details/5e56f2bee4e6df15a8a39b82) | [Saturday Afternoon](https://frontrowviews.com/Home/Event/Details/5e684f72eee6d91618503d44) |
+
+[Saturday Morning](https://frontrowviews.com/Home/Event/Details/5e56f2bee4e6df15a8a39b82) || [Saturday Afternoon](https://frontrowviews.com/Home/Event/Details/5e684f72eee6d91618503d44) 
 
 ### Lecture Overview
 
