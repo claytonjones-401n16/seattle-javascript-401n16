@@ -48,7 +48,7 @@ At the end of this class, you should have a solid understanding of how to write,
 
 Save or skim through the following links to help broaden your understanding.
 
-|                                                              |
+| Links                                                             |
 | ------------------------------------------------------------ |
 | [About `npm`](https://docs.npmjs.com/about-npm/index.html)   |
 | [Jest API Documentation](https://jestjs.io/docs/en/getting-started) |
