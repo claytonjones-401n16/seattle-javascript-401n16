@@ -10,13 +10,13 @@ Welcome to your first class of Advanced JavaScript at Code Fellows! You've done 
 
 In our first class, we'll start with an overview of the course schedule, assignments, and expectations. Then we'll dive into our main topics of Node.js, Test Driven Development and Continuous Integration. By the end of this lecture, you should be able to: 
 
-- [ ] Understand what Node.js is and why we use it 
-- [ ] Understand what the pros and cons of Test Driven Development are
-- [ ] Learn how to set up Continuous Integration for your lab assignments 
-- [ ] Setup a Node.js package and use `npm`
-- [ ] Create a CommonJS module 
-- [ ] Write a unit test
-- [ ] Setup live build testing on your lab assignments 
+- [x] Understand what Node.js is and why we use it 
+- [x] Understand what the pros and cons of Test Driven Development are
+- [x] Learn how to set up Continuous Integration for your lab assignments 
+- [x] Setup a Node.js package and use `npm`
+- [x] Create a CommonJS module 
+- [x] Write a unit test
+- [x] Setup live build testing on your lab assignments 
 
 Prior to class, review the readings below and answer the discussion questions in your canvas reading assignment. 
 
