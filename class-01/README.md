@@ -73,6 +73,7 @@ Familiarize yourself with the following vocabulary terms. We will be covering th
 | Test Driven Development (TDD) |
 | Jest                          |
 | Continuous Integration (CI)   |
+| unit test                     |
 
 ### Handy Code Snippets
 
