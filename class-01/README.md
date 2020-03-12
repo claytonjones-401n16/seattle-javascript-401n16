@@ -88,8 +88,6 @@ Feel free to skim these code snippets, they are mainly here for your reference a
 | `npm install <package>`    | Installs a specified `<package>` onto the current package    |
 | `npm install -g <package>` | Installs a specified `<package>` for the entirety of Node.js on your machine |
 | `node <file>`              | Runs a specified `<file>` using the Node.js ecosystem        |
-|                            |                                                              |
-|                            |                                                              |
 
 #### `package.json` Scripts
 
