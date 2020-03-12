@@ -2,31 +2,48 @@
 
 ## _Node Ecosystem, TDD, CI/CD_
 
-#### Lecture Videos 
+### Lecture Videos 
 
-|                      |                        |
-| -------------------- | ---------------------- |
-| [Saturday Morning]() | [Saturday Afternoon]() |
+|                                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [Saturday Morning](https://frontrowviews.com/Home/Event/Details/5e56f2bee4e6df15a8a39b82) | [Saturday Afternoon](https://frontrowviews.com/Home/Event/Details/5e684f72eee6d91618503d44) |
 
-Application development in the Node.js ecosystem, including the writing of modular code using CommonJS modules, writing tests to assert code quality, setting up and working in a "Continuous Integration" environment (Github Actions).
+### Lecture Overview
 
-## Learning Objectives
+Welcome to your first class of Advanced JavaScript at Code Fellows! You've done a lot of hard work to get here, and throughout this course you'll sharpen your development skills even further. 
 
-### Students will be able to
+In our first class, we'll start with an overview of the course schedule, assignments, and expectations. Then we'll dive into our main topics of Node.js, Test Driven Development and Continuous Integration. By the end of this lecture, you should be able to: 
 
-#### Describe and Define
+- [ ] Understand what Node.js is and why we use it 
+- [ ] Understand what the pros and cons of Test Driven Development are
+- [ ] Learn how to set up Continuous Integration for your lab assignments 
+- [ ] Setup a Node.js package and use `npm`
+- [ ] Create a CommonJS module 
+- [ ] Write a unit test
+- [ ] Setup live build testing on your lab assignments 
 
--   Node and the V8 Engine
--   Test Driven Development: Pros and Cons
--   Continuous Integration and Deployment
+Prior to class, review the readings below and answer the discussion questions in your canvas reading assignment. 
 
-#### Execute
+### Reading
 
--   Setup a Node.js Package using npm
--   Create CommonJS modules
--   Write unit test for javascript code
--   Setup Github Actions for their repositories for live build testing
+##### Vocabulary 
 
-## Today's Outline
+| Term                          | Definition | Links |
+| ----------------------------- | ---------- | ----- |
+| ecosystem                     |            |       |
+| Node.js                       |            |       |
+| V8 Engine                     |            |       |
+| modular                       |            |       |
+| CommonJS Module               |            |       |
+| package                       |            |       |
+| Test Driven Development (TDD) |            |       |
+| Continuous Integration (CI)   |            |       |
+| Continuous Deployment (CD)    |            |       |
 
-<!-- To Be Completed By Instructor -->
+### Discussion Questions
+
+
+
+
+
+
